@@ -1,0 +1,5 @@
+debug: true
+app:
+  filepath: "D:\\nokia-backup\\"
+  fileprefix: "nokiabackup"
+  fileendfix: ".txt"

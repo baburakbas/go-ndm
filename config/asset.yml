@@ -1,0 +1,4 @@
+debug: false
+asset:
+  host: "10.51.100.82"
+  port: "42002"
