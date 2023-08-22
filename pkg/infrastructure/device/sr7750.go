@@ -30,9 +30,8 @@ func (n NokiaSr7750) Connect(ctx context.Context, asset auth.Asset) error {
 
 func (n NokiaSr7750) Login(ctx context.Context, user auth.User) error {
 	n.telConn.SenderTelnet("\n")
-	n.telConn.SenderTelnet("\n")
-	n.telConn.SenderTelnet("\n")
 	n.telConn.SenderTelnet("logout\n")
+	n.telConn.SenderTelnet("\n")
 	receivedData := n.telConn.ReaderTelnet("Login:")
 	if tconfig.GetAppConfigInstance().Debug {
 		fmt.Println(receivedData)
@@ -43,7 +42,6 @@ func (n NokiaSr7750) Login(ctx context.Context, user auth.User) error {
 		fmt.Println(receivedData)
 	}
 	n.telConn.SenderTelnet("admin\n")
-	n.telConn.SenderTelnet("show router interface\n")
 
 	return nil
 }
@@ -60,13 +58,16 @@ func (n NokiaSr7750) ShowRouter(ctx context.Context) error {
 
 func (n NokiaSr7750) Backup(ctx context.Context) (string, error) {
 	n.telConn.SenderTelnet("\n")
+	n.telConn.SenderTelnet("\n")
+	n.telConn.SenderTelnet("environment terminal length 512\n")
+	n.telConn.SenderTelnet("environment terminal width 512\n")
 	n.telConn.SenderTelnet("admin display-config\n")
 	allReceivedData := ""
 	for {
 		receivedData := n.telConn.ReaderTelnet("\n")
 		allReceivedData += receivedData
 		if !strings.Contains(receivedData, "Finished") {
-			n.telConn.SenderTelnet("\n")
+			continue
 		} else {
 			break
 		}
