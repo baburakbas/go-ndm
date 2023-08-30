@@ -1,4 +1,4 @@
-# Nokia Device Manager with GoLang
+# Nokia Device Manager with Go
 
 A Go application for automating network device management, authentication, and configuration backup.
 
